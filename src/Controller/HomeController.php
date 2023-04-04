@@ -12,16 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @param Plat $plat
-     * @param RestaurantRepository $restaurantRepository
-     * @return Response
-     */
-    #[Route('/home/{plat}', name: 'app_home')]
-    public function index(Plat $plat, RestaurantRepository $restaurantRepository): Response
+
+    #[Route('/home/', name: 'app_home')]
+    public function index( RestaurantRepository $restaurantRepository): Response
     {
         $restaurants = $restaurantRepository->findAll();
-        $plats = ['burger', 'pizza', 'glace'];
+
 
         return $this->render('home/index.html.twig', [
             'restaurants' => $restaurants
