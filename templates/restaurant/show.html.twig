@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for restaurant in restaurants %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">{{ restaurant.name }}</a>
+                </h5>
+                <p class="card-text">{{ restaurant.address.name }}, {{ restaurant.address.zip }} {{ restaurant.address.city }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Plats du restaurant :</strong></li>
+{#                on fait un count pour le nombre de plats dans le restaurant#}
+                {% set count = restaurant.plats|length %}
+                <p>Nous avons {{ count }} plats dans ce restaurant</p>
+
+
+                {% for plat in restaurant.plats %}
+
+                        <li class="list-group-item">
+                            {{ plat.name }}{{ plat.price }}€
+                            <ul>
+                                {% for ingredient in plat.ingredients %}
+                                    <li>{{ ingredient.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+
+                {% endfor %}
+                <li class="list-group-item"><strong>Menus du restaurant :</strong></li>
+                {% for menu in restaurant.menus %}
+                    <li class="list-group-item">
+                        {{ menu.name }}{{ menu.price }}€
+                        <ul>
+                            {% for plat in menu.plats %}
+                                <li>{{ plat.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    {% endfor %}
+
+{% endblock %}
