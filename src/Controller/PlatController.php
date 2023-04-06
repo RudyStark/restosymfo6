@@ -16,6 +16,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PlatController extends AbstractController
 {
+//	private EntityManagerInterface $entityManager;
+//	private PlatRepository $platRepository;
+//
+//	public function __construct(EntityManagerInterface $entityManager, PlatRepository $platRepository)
+//	{
+//		$this->entityManager = $entityManager;
+//		$this->platRepository = $platRepository;
+//	}
+
+	#[Route('/plat/find/{id}', name: 'app_plat_show')]
+	// on récupère tout les plats d'un restaurant
+	public function show(string $id, RestaurantRepository $restaurantRepository): Response
+	{
+		$restaurants = $restaurantRepository->findBy(['id' => $id]);
+
+		return $this->render('plat/show.html.twig', [
+			'restaurants' => $restaurants,
+		]);
+	}
 
 	/**
 	 * @param Request $request
@@ -27,6 +46,7 @@ class PlatController extends AbstractController
 	public function create(Request $request, EntityManagerInterface $entityManager, RestaurantRepository $restaurantRepository): Response
 	{
 		$restaurant = $restaurantRepository->find($request->get('id'));
+		$plats = $restaurant->getPlats();
 
 		$ingredient = new Ingredient();
 		$formIngredient = $this->createForm(IngredientType::class, $ingredient);
@@ -56,27 +76,46 @@ class PlatController extends AbstractController
 		return $this->render('plat/create.html.twig', [
 			'formIngredient' => $formIngredient->createView(),
 			'formPlat' => $formPlat->createView(),
-			'restaurant' => $restaurant
+			'restaurant' => $restaurant,
+			'plats' => $plats
 		]);
 	}
 
 	#[Route('/plat/{id}/delete', name: 'app_plat_delete')]
 	public function delete(Request $request, EntityManagerInterface $entityManager, PlatRepository $platRepository, Plat $plat): Response
 	{
-		// Si c'est un plat qui est supprimé
-		if ($request->get('plat')) {
-			$plat = $platRepository->find($request->get('plat'));
-			$entityManager->remove($plat);
-			$entityManager->flush();
-			$this->addFlash('success', 'Le plat a bien été supprimé');
-		}
-		// Si c'est un ingrédient qui est supprimé
-		if ($request->get('ingredient')) {
-			$ingredient = $platRepository->find($request->get('ingredient'));
-			$entityManager->remove($ingredient);
-			$entityManager->flush();
-			$this->addFlash('success', 'L\'ingrédient a bien été supprimé');
-		}
+		$entityManager->remove($plat);
+		$entityManager->flush();
+
+		$this->addFlash('success', 'Le plat a bien été supprimé');
 		return $this->redirectToRoute('restaurant_show', ['id' => $plat->getRestaurant()->getId()]);
+	}
+
+	/**
+	 * @param Request $request
+	 * @param EntityManagerInterface $entityManager
+	 * @param PlatRepository $platRepository
+	 * @param Plat $plat
+	 * @return Response
+	 * @throws \Symfony\Component\Form\Exception\LogicException
+	 */
+	#[Route('/plat/{id}/update', name: 'app_plat_update')]
+    public function update(Request $request, EntityManagerInterface $entityManager, PlatRepository $platRepository, Plat $plat): Response
+	{
+		$form = $this->createForm(PlatType::class, $plat);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$entityManager->persist($plat);
+			$entityManager->flush();
+
+			$this->addFlash('success', 'Le plat a bien été modifié');
+			return $this->redirectToRoute('app_plat_show', ['id' => $plat->getRestaurant()->getId()]);
+		}
+
+		return $this->render('plat/edit.html.twig', [
+			'form' => $form->createView(),
+			'plat' => $plat
+		]);
 	}
 }

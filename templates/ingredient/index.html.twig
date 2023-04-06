@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    {% for ingredient in ingredients %}
+
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">
@@ -17,22 +17,22 @@
                     </tr>
                     </thead>
                     <tbody>
-
+                 {% for ingredient in ingredients %}
                         <tr>
                             <td>{{ ingredient.name }}</td>
                             <td>
-{#                                <a href="{{ path('app_menu_update', {'id': menu.id}) }}" class="btn btn-primary">Modifier</a>#}
-{#                                <a href="{{ path('app_menu_delete', {'id': menu.id}) }}" class="btn btn-danger">Supprimer</a>#}
+                                <a href="{{ path('app_ingredient_update', {'id': ingredient.id}) }}" class="btn btn-primary">Modifier</a>
+                                <a href="{{ path('app_ingredient_delete', {'id': ingredient.id}) }}" class="btn btn-danger">Supprimer</a>
                             </td>
                         </tr>
-
+                 {% endfor %}
                     </tbody>
                 </table>
 
             </div>
 {#            <a href="{{ path('app_menu_create', {'id': restaurant.id}) }}" class="btn btn-primary">Ajouter un menu</a>#}
         </div>
-    {% endfor %}
+
 
     <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour</a>
 {% endblock %}

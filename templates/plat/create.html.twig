@@ -15,10 +15,10 @@
                 {{ form_start(formPlat, { 'attr': { 'class': 'form' } }) }}
                 {{ form_widget(formPlat) }}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>
                 {{ form_end(formPlat) }}
-                {{ dump(formPlat) }}
+                <a href="{{ path('app_plat_show', {'id': restaurant.id}) }}" class="btn btn-primary">Gérer mes plats</a>
+
             </div>
 
             <div class="col-md-6">
