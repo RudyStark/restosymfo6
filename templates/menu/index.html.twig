@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for restaurant in restaurants %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">{{ restaurant.name }}</a>
+                </h5>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nom du menu</th>
+                        <th>Prix</th>
+                        <th>Plats</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for menu in restaurant.menus %}
+                        <tr>
+                            <td>{{ menu.name }}</td>
+                            <td>{{ menu.price }}€</td>
+                            <td>
+                                <ul>
+                                    {% for plat in menu.plats %}
+                                        <li>{{ plat.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <a href="{{ path('app_menu_update', {'id': menu.id}) }}" class="btn btn-primary">Modifier</a>
+                                <a href="{{ path('app_menu_delete', {'id': menu.id}) }}" class="btn btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            <a href="{{ path('app_menu_create', {'id': restaurant.id}) }}" class="btn btn-primary">Ajouter un menu</a>
+        </div>
+    {% endfor %}
+
+    <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour</a>
+{% endblock %}
