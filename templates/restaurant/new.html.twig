@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+
+        <h1 class="mt-4">Création d'un restaurant</h1>
+
+{#    {{ form_start(form) }}#}
+{#        <div class="form-group">#}
+{#            {{ form_label(form.name) }}#}
+{#            {{ form_widget(form.name) }}#}
+{#            <div class="form-error">#}
+{#                {{ form_errors(form.name) }}#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            {{ form_label(form.zip) }}#}
+{#            {{ form_widget(form.zip) }}#}
+{#            <div class="form-error">#}
+{#                {{ form_errors(form.zip) }}#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            {{ form_label(form.city) }}#}
+{#            {{ form_widget(form.city) }}#}
+{#            <div class="form-error">#}
+{#                {{ form_errors(form.city) }}#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            {{ form_label(form.address) }}#}
+{#            {{ form_widget(form.address) }}#}
+{#            <div class="form-error">#}
+{#                {{ form_errors(form.address) }}#}
+{#            </div>#}
+{#        </div>#}
+
+{#        {{ form_end(form) }}#}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+    </div>
+{% endblock %}
+

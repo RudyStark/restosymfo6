@@ -4,16 +4,31 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-    <h1>Voici tous les restaurants</h1>
-    {% for restaurant in restaurants %}
-        <ul>
-{#            Lien vers le restaurant:#}
-            <li><a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">{{ restaurant.name }}</a></li>
-            <li>Adresse du resto : {{ restaurant.address.name }} {{ restaurant.address.zip }} {{ restaurant.address.city }}</li>
-        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Voici tous les restaurants</h1>
+            </div>
+        </div>
+        {% for restaurant in restaurants %}
+            <div class="row">
+                <div class="col-12">
+                    <ul>
+                        <li><a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">{{ restaurant.name }}</a></li>
+                        <li>Adresse du resto : {{ restaurant.address.name }} {{ restaurant.address.zip }} {{ restaurant.address.city }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Actions:</p>
+                    <a href="{{ path('restaurant_update', {'id': restaurant.id}) }}" class="btn btn-primary">Modifier</a>
+                    <a href="{{ path('restaurant_delete', {'id': restaurant.id}) }}" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+        {% endfor %}
 
-
-    {% endfor %}
-</div>
+        <p>Ajouter Restaurant</p>
+        <a href="{{ path('restaurant_create') }}" class="btn btn-success">Ajouter un restaurant</a>
+    </div>
 {% endblock %}

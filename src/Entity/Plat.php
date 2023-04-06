@@ -26,7 +26,7 @@ class Plat
     #[ORM\JoinColumn(nullable: false)]
     private ?Restaurant $restaurant = null;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'plats')]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'plats', cascade: ['persist'])]
     private Collection $ingredients;
 
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'plats')]

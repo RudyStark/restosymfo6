@@ -25,10 +25,10 @@ class Restaurant
     #[ORM\JoinColumn(nullable: false)]
     private ?Address $address = null;
 
-    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Plat::class)]
+    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Plat::class, cascade: ['persist', 'remove'])]
     private Collection $plats;
 
-    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Menu::class)]
+    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Menu::class, cascade: ['persist', 'remove'])]
     private Collection $menus;
 
     public function __construct()

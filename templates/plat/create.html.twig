@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Formulaire: Plats et ingrédients</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Plats</h2>
+                {{ form_start(formPlat, { 'attr': { 'class': 'form' } }) }}
+                {{ form_widget(formPlat) }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </div>
+                {{ form_end(formPlat) }}
+                {{ dump(formPlat) }}
+            </div>
+
+            <div class="col-md-6">
+                <h2>Ingrédients</h2>
+                {{ form_start(formIngredient, { 'attr': { 'class': 'form' } }) }}
+                {{ form_widget(formIngredient) }}
+                <div class="form-group">
+                    <a href="{{ path('app_ingredient', {'id': restaurant.id}) }}" class="btn btn-primary">Gérer mes ingrédients</a>
+
+                </div>
+                {{ form_end(formIngredient) }}
+            </div>
+        </div>
+
+        <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}" class="btn btn-secondary">Retour</a>
+    </div>
+
+
+{% endblock %}

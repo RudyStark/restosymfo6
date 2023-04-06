@@ -42,7 +42,11 @@
                 {% endfor %}
 
             </ul>
+
         </div>
+        <a href="{{ path('app_plat_create', {'id': restaurant.id}) }}" class="btn btn-primary">Ajouter un plat</a>
+        <a href="{{ path('app_menu_index', {'id': restaurant.id}) }}" class="btn btn-primary">Vos menus</a>
     {% endfor %}
 
+    <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour</a>
 {% endblock %}
